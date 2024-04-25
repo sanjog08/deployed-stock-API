@@ -611,7 +611,6 @@ app.patch("/sellholding/:id", async (req, res) => {
 
 // entry
 
-
 // for watchlist-1
 // GET method to store IDs in an array
 app.get("/reload-1", async (req, res) => {
@@ -1210,14 +1209,14 @@ const realRateHoldings = async () => {
         const stockIds = stocksData.map(stock => stock._id);
         allHoldingStockIds = stocksData.map(stock => stock._id);
 
-        console.log(allHoldingStockIds);
+        // console.log(allHoldingStockIds);
         // res.send(stockIds);
         updateHoldingRates();
     } catch (err) {
         res.status(500).send(err);
     }
 }
-setInterval(realRateHoldings, 20000);
+setInterval(realRateHoldings, 30000);
 // id ---> stock_name ---> rate
 const getHoldingRate = async (stockId) => {
     try {
@@ -1236,7 +1235,7 @@ const getHoldingRate = async (stockId) => {
                     // Extract rate from HTML
                     const rate = extract_rate(html_rate);
                     resolve(rate);
-                    console.log(`rate from the main function is ${rate}`);
+                    // console.log(`rate from the main function is ${rate}`);
                     return rate;
                 } else {
                     reject("Error fetching stock price");
@@ -1255,7 +1254,7 @@ const updateHoldingRates = async () => {
         for (const stockId of allHoldingStockIds) {
             // Sending a PUT request to update the rate of each stock
             await request.put(`http://localhost:7000/updaterate-hold/${stockId}`);
-            console.log(`Rate updated for stock with ID: ${stockId}`);
+            // console.log(`Rate updated for stock with ID: ${stockId}`);
         }
     } catch (err) {
         console.error('Error updating stock rates:', err);
@@ -1290,14 +1289,11 @@ const extract_rate = (html_rate) => {
     const element = $('.YMlKec.fxKbKc');
     const rate = element.text();
     const cost = rate.replace(/[^\d.]/g, '');
-    console.log(`rate of the stock is ${rate}`);
+    // console.log(`rate of the stock is ${rate}`);
     return cost;
 }
 
-
 // exit
-
-
 
 
 app.listen(port, () => {
