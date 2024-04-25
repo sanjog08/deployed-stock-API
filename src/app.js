@@ -1,6 +1,7 @@
 const express = require("express");
 const request = require("request");
 const cheerio = require("cheerio");
+const cors = require("cors");
 require("./db/conn");
 const Stock  = require("./model/allStocksSchema");
 const newStock1 = require("./model/watchlist_1schema");
@@ -17,6 +18,7 @@ const port = process.env.PORT  || 7000;
 
 // to get data from the postman in our terminal
 app.use(express.json());
+app.use(cors());
 
 
 allStockIds = [];
